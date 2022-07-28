@@ -76,37 +76,37 @@ jobs:
     - name: Deploy apache image to public ec2
       uses: appleboy/ssh-action@master
       with:
-        host: ${{ secrets.PUBLIC_IP}}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
-        port: ${{ secrets.PORT }}
+        host: 3.237.254.197
+        username: ubuntu
+        key: ${{ secrets.SSH_KEY }}
+        port: 22
         script: |
           sudo apt install awscli -y
           sudo aws configure set aws_access_key_id "${{ secrets.ACCESS_KEY_ID }}"
           sudo aws configure set aws_secret_access_key "${{ secrets.SECRET_ACCESS_KEY }}"
           sudo aws configure set region "us-east-1"
           sudo aws configure set output json
-          sudo aws ecr get-login-password --region us-east-1 | sudo docker login --username AWS --password-stdin 323922828731.dkr.ecr.us-east-1.amazonaws.com
-          sudo docker pull 323922828731.dkr.ecr.us-east-1.amazonaws.com/apache-registry:apache_image
-          sudo docker run -i -t -d -p 80:80 323922828731.dkr.ecr.us-east-1.amazonaws.com/apache-registry:apache_image sh 
+          sudo aws ecr get-login-password --region us-east-1 | sudo docker login --username AWS --password-stdin 741768617807.dkr.ecr.us-east-1.amazonaws.com
+          sudo docker pull 741768617807.dkr.ecr.us-east-1.amazonaws.com/apache-registry:apache_image
+          sudo docker run -i -t -d -p 80:80 741768617807.dkr.ecr.us-east-1.amazonaws.com/apache-registry:apache_image sh 
 
     - name: Deploy tomcat image to private ec2
       uses: appleboy/ssh-action@master
       with:
-        host: ${{ secrets.PRIVATE_IP}}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
-        port: ${{ secrets.PORT }}
-        proxy_host: ${{ secrets.PUBLIC_IP }}
-        proxy_username: ${{ secrets.USERNAME }}
-        proxy_key: ${{ secrets.SSH_PRIVATE_KEY }}
+        host: 10.0.2.204
+        username: ubuntu
+        key: ${{ secrets.SSH_KEY }}
+        port: 22
+        proxy_host: 3.237.254.197
+        proxy_username: ubuntu
+        proxy_key: ${{ secrets.SSH_KEY }}
         proxy_port: 22
         script: |
           sudo apt install awscli -y
-          sudo aws configure set aws_access_key_id "${{ secrets.AWS_ACCESS_KEY_ID }}"
-          sudo aws configure set aws_secret_access_key "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+          sudo aws configure set aws_access_key_id "${{ secrets.ACCESS_KEY_ID }}"
+          sudo aws configure set aws_secret_access_key "${{ secrets.SECRET_ACCESS_KEY }}"
           sudo aws configure set region "us-east-1"
           sudo aws configure set output json
-          sudo aws ecr get-login-password --region us-east-1 | sudo docker login --username AWS --password-stdin 323922828731.dkr.ecr.us-east-1.amazonaws.com
-          sudo docker pull 323922828731.dkr.ecr.us-east-1.amazonaws.com/tomcat-registry:tomcat_image
-          sudo docker run -i -t -d -p 8080:8080 323922828731.dkr.ecr.us-east-1.amazonaws.com/tomcat-registry:tomcat_image sh
+          sudo aws ecr get-login-password --region us-east-1 | sudo docker login --username AWS --password-stdin 741768617807.dkr.ecr.us-east-1.amazonaws.com
+          sudo docker pull 741768617807.dkr.ecr.us-east-1.amazonaws.com/tomcat-registry:tomcat_image
+          sudo docker run -i -t -d -p 8080:8080 741768617807.dkr.ecr.us-east-1.amazonaws.com/tomcat-registry:tomcat_image sh
