@@ -111,3 +111,4 @@ jobs:
           sudo docker pull 741768617807.dkr.ecr.us-east-1.amazonaws.com/tomcat-registry:tomcat_image
           sudo docker run -i -t -d -p 8080:8080 741768617807.dkr.ecr.us-east-1.amazonaws.com/tomcat-registry:tomcat_image sh
          
+         
