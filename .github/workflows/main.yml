@@ -110,3 +110,4 @@ jobs:
           sudo aws ecr get-login-password --region us-east-1 | sudo docker login --username AWS --password-stdin 741768617807.dkr.ecr.us-east-1.amazonaws.com
           sudo docker pull 741768617807.dkr.ecr.us-east-1.amazonaws.com/tomcat-registry:tomcat_image
           sudo docker run -i -t -d -p 8080:8080 741768617807.dkr.ecr.us-east-1.amazonaws.com/tomcat-registry:tomcat_image sh
+         
